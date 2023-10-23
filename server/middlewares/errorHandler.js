@@ -30,8 +30,21 @@ module.exports = (err, req, res, next) => {
             status = 401;
             message = 'Password Salah'
             break;
-        
-            
+
+        case "NOT_FOUND":
+            status = 404;
+            message = 'Article Not Found'
+            break;
+
+        case "UNAUTHENTICATED":
+            status = 401;
+            message = 'Authentication Required'
+            break;
+
+        case "FORBIDDEN":
+            status = 403;
+            message = 'You Are Not Authorized!';
+            break;
     }
 
     res.status(status).json({ message })

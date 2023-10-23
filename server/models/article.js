@@ -25,11 +25,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     slug: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: { msg: "Slug tidak boleh kosong" },
-        notEmpty: { msg: "Slug tidak boleh kosong" }
-      }
     },
     penulis: {
       type: DataTypes.INTEGER,
@@ -49,11 +44,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     tanggalPublikasi: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        notNull: { msg: "Tanggal tidak boleh kosong" },
-        notEmpty: { msg: "Tanggal tidak boleh kosong" }
-      }
     },
     kategori: {
       type: DataTypes.STRING,
@@ -63,6 +53,9 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: { msg: "Judul tidak boleh kosong" }
       }
     },
+    totalViews: {
+      type: DataTypes.INTEGER
+    },
   }, {
     sequelize,
     modelName: 'Article',
@@ -70,6 +63,7 @@ module.exports = (sequelize, DataTypes) => {
       beforeCreate: (instance) => {
         instance.slug = instance.judul.toLowerCase().split(' ').join('-')
         instance.tanggalPublikasi = instance.createdAt
+        instance.totalViews = 0
       },
       beforeBulkUpdate: (instance) => {
         instance.attributes.slug = instance.attributes.judul

@@ -15,6 +15,9 @@ module.exports = {
       slug: {
         type: Sequelize.STRING,
       },
+      totalViews: {
+        type: Sequelize.INTEGER
+      },
       penulis: {
         type: Sequelize.INTEGER,
         references: {
