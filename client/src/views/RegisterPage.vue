@@ -12,7 +12,7 @@ export default {
   },
   methods: {
     ...mapActions(useUserStore, ["register"]),
-    async submitRegister() {
+    submitRegister() {
       let value = {
         email: this.email,
         password: this.password,

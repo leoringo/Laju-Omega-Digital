@@ -18,9 +18,17 @@ export default {
   },
   methods: {
     ...mapActions(useArticleStore, ["fetchArticle"]),
+
+    getArticle() {
+      let value = {
+        name: this.name,
+        category: this.category,
+      };
+      this.fetchArticle(value);
+    },
   },
-  async created() {
-    await this.fetchArticle();
+  created() {
+    this.fetchArticle({ name: "", category: "" });
   },
 };
 </script>
@@ -43,9 +51,23 @@ export default {
             </div>
             <div class="d-flex justify-content-start align-item-center my-2">
               <div>
-                <form>
-                  <!-- @submit.prevent="getProduct(filter)" -->
-                  <!-- <input v-model="filter" type="text" /> -->
+                <form @submit.prevent="getArticle">
+                  <input v-model="name" type="text" />
+                  <select
+                    v-model="category"
+                    class="form-select mt-3"
+                    aria-label="Default select example"
+                  >
+                    <option value="" selected>Select a Category</option>
+                    <option value="Rumah dan Dekorasi">
+                      Rumah dan Dekorasi
+                    </option>
+                    <option value="Travel">Travel</option>
+                    <option value="Kuliner">Kuliner</option>
+                    <option value="Hiburan">Hiburan</option>
+                    <option value="Otomotif">Otomotif</option>
+                    <option value="Pendidikan">Pendidikan</option>
+                  </select>
                   <button type="submit" class="btn btn-primary mt-2">
                     Search
                   </button>

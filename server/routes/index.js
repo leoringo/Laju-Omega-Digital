@@ -11,7 +11,7 @@ router.post('/register', Controller.register)
 router.get('/', Controller.getAllArticles)
     .get('/detail/:id', Controller.getArticleById)
     .use(authenticate) // login to create new articles
-    .post('/new-article', Controller.createArticle)
+    .post('/', Controller.createArticle)
     .put('/edit/:id', authorization, Controller.editArticle)
     .delete('/delete/:id', authorization, Controller.deleteArticle)
 

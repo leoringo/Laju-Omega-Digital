@@ -30,61 +30,55 @@ export default {
 
 <template>
   <nav
-    class="navbar navbar-expand-lg navbar-light bg-light shadow mb-4 p-3 bg-body rounded d-flex justify-content-between align-items-center"
+    class="navbar navbar-expand-lg navbar-light bg-light shadow mb-4 p-3 bg-body rounded"
   >
-    <div class="mx-5">
-      <img
-        src="https://1000logos.net/wp-content/uploads/2020/09/Steelseries-logo.png"
-        width="120"
-      />
-    </div>
-    <div class="navbar-nav d-flex">
+    <div class="navbar-nav mx-auto">
       <button
         type="button"
-        class="nav-item me-3 btn btn-outline-info"
+        class="nav-item me-3 btn btn-outline-primary"
         :class="{ active: isActive('home') }"
       >
-        <router-link class="text-dark" to="/">Home</router-link>
+        <router-link class="text-decoration-none text-dark" to="/"
+          >Home</router-link
+        >
       </button>
       <button
         type="button"
-        class="nav-item me-3 btn btn-outline-info"
+        class="btn btn-outline-primary nav-item me-3"
+        :class="{ active: isActive('newArticle') }"
+      >
+        <router-link to="/new-article" class="text-decoration-none text-dark">
+          Create Article
+        </router-link>
+      </button>
+      <button
+        type="button"
+        class="nav-item me-3 btn btn-outline-info text-decoration-none"
         :class="{ active: isActive('login') }"
         v-if="isLogged === false"
       >
-        <router-link class="text-dark" to="/login">Sign In</router-link>
+        <router-link class="text-dark text-decoration-none" to="/login"
+          >Sign In</router-link
+        >
       </button>
-      <div class="me-3" v-if="isLogged === true">
-        <div class="dropdown pb-4">
-          <button
-            href="#"
-            class="d-flex align-items-center text-white text-decoration-none dropdown-toggle btn btn-outline-info"
-            id="dropdownUser1"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <span class="d-none d-sm-inline text-dark">Hi, {{ email }}!</span>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-            <li>
-              <a
-                class="dropdown-item text-light"
-                href=""
-                @click.prevent="logout"
-                >Sign out</a
-              >
-            </li>
-          </ul>
-        </div>
-      </div>
+      <template v-if="isLogged === true">
+        <button
+          class="d-flex align-items-center text-decoration-none btn btn-danger"
+          @click.prevent="logout"
+        >
+          Logout
+        </button>
+        <span class="badge bg-dark text-center d-flex align-items-center ms-3"
+          >WELCOME {{ email }}</span
+        >
+      </template>
     </div>
   </nav>
 </template>
 
 <style scoped>
 .navbar-nav .nav-item.active {
-  background-color: #007bff;
-  color: #fff;
-  text-decoration: none;
+  background-color: rgb(9, 118, 252);
+  /* color: #fff; */
 }
 </style>

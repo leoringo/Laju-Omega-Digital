@@ -19,9 +19,19 @@ export const useArticleStore = defineStore('article', {
       console.log(error.response.data.message);
     },
 
-    async fetchArticle() {
+    async fetchArticle({ name, category }) {
       try {
-        const { data } = await axios.get(this.baseUrl)
+        let url = ''
+
+        if (name && category) url = this.baseUrl + `/?name=${name}&category=${category}`
+
+        else if (name) url = this.baseUrl + `/?name=${name}`
+
+        else if (category) url = this.baseUrl + `/?category=${category}`
+
+        else url = this.baseUrl
+
+        const { data } = await axios.get(url)
         this.articles = data
       } catch (error) {
         console.log(error);
@@ -46,6 +56,23 @@ export const useArticleStore = defineStore('article', {
             access_token: localStorage.access_token
           }
         })
+        this.fetchArticle()
+      } catch (error) {
+        this.swalError(error)
+      }
+    },
+
+    async createArticle(value) {
+      try {
+        // const { data } = await axios({
+        //   url: this.baseUrl,
+        //   method: 'POST',
+        //   headers: {
+        //     access_token: localStorage.access_token
+        //   },
+        //   data: value
+        // })
+        console.log(value);
         this.fetchArticle()
       } catch (error) {
         this.swalError(error)
