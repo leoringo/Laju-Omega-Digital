@@ -38,7 +38,7 @@ class Controller {
 
             const access_token = jwtSign({ id: user.id, email })
 
-            res.status(200).json({ access_token, penulis: user.id })
+            res.status(200).json({ access_token, email })
         } catch (error) {
             next(error)
         }
