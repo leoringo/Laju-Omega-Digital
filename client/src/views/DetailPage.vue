@@ -8,6 +8,19 @@ export default {
   },
   methods: {
     ...mapActions(useArticleStore, ["fetchArticleDetail"]),
+
+     formatDate(dateStr) {
+      const date = new Date(dateStr);
+      const options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+      const indonesiaLocale = "id-ID";
+      const formattedDate = date.toLocaleString(indonesiaLocale, options);
+
+      return formattedDate;
+    },
   },
   created() {
     this.fetchArticleDetail(this.$route.params.id);
@@ -32,7 +45,7 @@ export default {
       </div>
       <div class="my-3">
         <h3 class="text-success">Tanggal Publikasi</h3>
-        <p>{{ articleDetail.tanggalPublikasi.split("T")[0] }}</p>
+        <p>{{ formatDate(articleDetail.tanggalPublikasi) }}</p>
       </div>
       <div class="my-3">
         <h3 class="text-success">Penulis</h3>

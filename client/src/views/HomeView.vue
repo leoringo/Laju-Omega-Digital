@@ -19,8 +19,8 @@ export default {
   methods: {
     ...mapActions(useArticleStore, ["fetchArticle"]),
   },
-  created() {
-    this.fetchArticle();
+  async created() {
+    await this.fetchArticle();
   },
 };
 </script>

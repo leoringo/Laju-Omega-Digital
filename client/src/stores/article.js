@@ -10,12 +10,13 @@ export const useArticleStore = defineStore('article', {
   }),
 
   actions: {
-    swalError() {
+    swalError(error) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Something went wrong!'
+        text: error.response.data.message,
       })
+      console.log(error.response.data.message);
     },
 
     async fetchArticle() {
@@ -31,9 +32,23 @@ export const useArticleStore = defineStore('article', {
       try {
         const { data } = await axios.get(this.baseUrl + '/detail/' + id)
         this.articleDetail = data
-        console.log(this.articleDetail);
       } catch (error) {
         console.log(error);
+      }
+    },
+
+    async deleteArticle(id) {
+      try {
+        const { data } = await axios({
+          url: this.baseUrl + '/delete/' + id,
+          method: 'DELETE',
+          headers: {
+            access_token: localStorage.access_token
+          }
+        })
+        this.fetchArticle()
+      } catch (error) {
+        this.swalError(error)
       }
     }
   },

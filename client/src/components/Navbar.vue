@@ -19,7 +19,7 @@ export default {
       return this.$route.name === routeName;
     },
   },
-  created() {
+  async created() {
     if (localStorage.email) {
       this.isLogged = true;
       this.email = localStorage.email;
