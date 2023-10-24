@@ -11,8 +11,8 @@ export default {
     logout() {
       localStorage.clear();
       this.isLogged = false;
-      this.$router.push("/");
       this.email = null;
+      this.$router.push("/");
     },
 
     isActive(routeName) {

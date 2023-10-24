@@ -21,15 +21,13 @@ export const useArticleStore = defineStore('article', {
 
     async fetchArticle({ name, category }) {
       try {
-        let url = ''
+        let url = this.baseUrl
 
         if (name && category) url = this.baseUrl + `/?name=${name}&category=${category}`
 
         else if (name) url = this.baseUrl + `/?name=${name}`
 
         else if (category) url = this.baseUrl + `/?category=${category}`
-
-        else url = this.baseUrl
 
         const { data } = await axios.get(url)
         this.articles = data
@@ -56,7 +54,7 @@ export const useArticleStore = defineStore('article', {
             access_token: localStorage.access_token
           }
         })
-        this.fetchArticle()
+        this.fetchArticle({})
       } catch (error) {
         this.swalError(error)
       }
@@ -64,18 +62,35 @@ export const useArticleStore = defineStore('article', {
 
     async createArticle(value) {
       try {
-        // const { data } = await axios({
-        //   url: this.baseUrl,
-        //   method: 'POST',
-        //   headers: {
-        //     access_token: localStorage.access_token
-        //   },
-        //   data: value
-        // })
-        console.log(value);
-        this.fetchArticle()
+        const { data } = await axios({
+          url: this.baseUrl,
+          method: 'POST',
+          headers: {
+            access_token: localStorage.access_token
+          },
+          data: value
+        })
+        this.fetchArticle({})
+        this.router.push('/')
       } catch (error) {
         this.swalError(error)
+      }
+    },
+
+    async editArticle(id, value) {
+      try {
+        const { data } = await axios({
+          url: this.baseUrl + '/edit/' + id,
+          method: 'PUT',
+          headers: {
+            access_token: localStorage.access_token
+          },
+          data: value
+        })
+        this.fetchArticle({})
+        this.router.push('/')
+      } catch (error) {
+
       }
     }
   },

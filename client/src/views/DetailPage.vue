@@ -9,7 +9,7 @@ export default {
   methods: {
     ...mapActions(useArticleStore, ["fetchArticleDetail"]),
 
-     formatDate(dateStr) {
+    formatDate(dateStr) {
       const date = new Date(dateStr);
       const options = {
         year: "numeric",
@@ -49,7 +49,9 @@ export default {
       </div>
       <div class="my-3">
         <h3 class="text-success">Penulis</h3>
-        <p>{{ articleDetail.User.email }}</p>
+        <p v-if="articleDetail.User && articleDetail.User.email">
+          {{ articleDetail.User.email }}
+        </p>
       </div>
       <div class="my-3">
         <h3 class="text-success">Total Viewers</h3>

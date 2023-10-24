@@ -15,6 +15,14 @@ export default {
       }
     },
 
+    async editArticle(id) {
+      try {
+        this.$router.push("/edit/" + id);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
     async deleteCommand(id) {
       try {
         this.deleteArticle(id);
@@ -42,11 +50,11 @@ export default {
         class="btn btn-primary mx-2"
         @click.prevent="toDetail(article.id)"
       >
-        <!-- @click="editArticle(article)" -->
         Detail
       </button>
-      <button class="btn btn-outline-warning mx-2">
-        <!-- @click="editArticle(article)" -->
+      <button class="btn btn-outline-warning mx-2" @click.prevent="editArticle(article.id)">
+        
+        
         Edit
       </button>
       <button

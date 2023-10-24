@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapState, mapWritableState } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useArticleStore } from "../stores/article";
 import Article from "../components/Article.vue";
 

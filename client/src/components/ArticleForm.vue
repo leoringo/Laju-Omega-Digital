@@ -1,5 +1,5 @@
 <script>
-import { mapActions } from "pinia";
+import { mapActions, mapWritableState } from "pinia";
 import { useArticleStore } from "../stores/article";
 
 export default {
@@ -12,24 +12,65 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapWritableState(useArticleStore, ["articleDetail"]),
+  },
   methods: {
-    ...mapActions(useArticleStore, ["createArticle"]),
+    ...mapActions(useArticleStore, [
+      "createArticle",
+      "fetchArticleDetail",
+      "editArticle",
+    ]),
     submitForm() {
       let value = {
         judul: this.article.judul,
         kategori: this.article.kategori,
         konten: this.article.konten,
       };
+      this.createArticle(value);
     },
+
+    submitFormEdit() {
+      let value = {
+        judul: this.article.judul,
+        kategori: this.article.kategori,
+        konten: this.article.konten,
+      };
+      this.editArticle(this.$route.params.id, value);
+    },
+
+    handleSubmit() {
+      if (this.$route.name === "edit") {
+        this.submitFormEdit();
+      } else {
+        this.submitForm();
+      }
+    },
+  },
+  created() {
+    if (this.$route.name === "edit") {
+      this.fetchArticleDetail(this.$route.params.id)
+        .then(() => {
+          this.article = this.articleDetail;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   },
 };
 </script>
 
 <template>
   <div>
-    <h2 class="text-center">Create Article</h2>
+    <h2 class="text-center">
+      {{ $route.name === "edit" ? "Edit Article" : "Create Article" }}
+    </h2>
     <div class="container">
-      <form @submit.prevent="submitForm" class="my-4">
+      <form
+        @submit.prevent="handleSubmit"
+        class="my-4"
+      >
         <div class="mb-3">
           <label for="judul" class="form-label">Judul</label>
           <input
